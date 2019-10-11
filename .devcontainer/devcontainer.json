@@ -7,7 +7,7 @@
 		// update Dockerfile with your user's UID/GID if not 1000.
 		"-u", "vscode",
 
-		"--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"
+		"--privileged", "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"
 	],
 
 	// Use 'settings' to set *default* container specific settings.json values on container create. 
@@ -27,7 +27,7 @@
 	// "postCreateCommand": "rustc --version"
 
 	"extensions": [
-	    ""ms-python.python",
+	    "ms-python.python",
     	"pymakr",
 		"micropy-cli",
 		"vadimcn.vscode-lldb"

@@ -4,9 +4,9 @@ FROM ubuntu:18.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Or your actual UID, GID on Linux if not the default 1000
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
+# ARG USERNAME=vscode
+# ARG USER_UID=1000
+# ARG USER_GID=$USER_UID
 
 # Configure apt and install packages
 RUN apt-get update \
@@ -56,7 +56,9 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.7.10-Linux-x86
 
 RUN conda update -n base -c defaults conda
 RUN conda create -n py3 python=3.7
-RUN /bin/bash -c '. activate py3 && pip install esptool setuptools serial click cryptography future pyparsing==2.3.1 pyelftools'
+# RUN /bin/bash -c '. activate py3 && pip install esptool setuptools serial click cryptography future pyparsing==2.3.1 pyelftools'
+RUN /bin/bash -c '. activate py3 && pip install esptool setuptools pyserial click cryptography future pyparsing==2.3.1 pyelftools'
+
 #RUN /bin/bash -c '. activate py3 && pip install --upgrade pyparsing==2.3.1'
 
 # otherwise configure gdb will crash
@@ -120,14 +122,23 @@ RUN /bin/bash -c '. activate py3 && \
     cd /root/micropython && \
     make -C mpy-cross' 
 
-RUN /bin/bash -c '. activate py3 && pip uninstall -y serial && rm -rf /opt/conda/envs/py3/lib/python3.7/site-packages/serial && pip install pyserial'
-
-RUN /bin/bash -c '. activate py3 && pip install --upgrade --force-reinstal pyserial'
+# RUN /bin/bash -c '. activate py3 && pip uninstall -y serial && rm -rf /opt/conda/envs/py3/lib/python3.7/site-packages/serial && pip install pyserial'
+# RUN /bin/bash -c '. activate py3 && pip install --upgrade --force-reinstal pyserial'
 
 RUN /bin/bash -c '. activate py3 && \
     cd /root/micropython/ports/esp32 && \
     ESPIDF=$IDF_PATH make -j4'
 
+ADD sudoers /etc/sudoers
+
+ENV SHELL /bin/bash
+# script to set environment
+ADD bashrc /root/bashrc
+RUN chmod 755 /root \
+    && chmod 755 /root/bashrc
+#WORKDIR $THEIA_RUST_APP_PATH
+ENV USER root
+# CMD [ "bash", "-rcfile", "/root/bashrc", "-i", "/root/run.sh" ]
 
 #RUN apt-get install git wget libncurses-dev flex bison gperf python python-pip python-setuptools python-serial python-click python-cryptography python-future python-pyparsing python-pyelftools cmake ninja-build ccache
 
@@ -139,4 +150,3 @@ RUN /bin/bash -c '. activate py3 && \
 
 
 # Switch back to dialog for any ad-hoc use of apt-get
-ENV DEBIAN_FRONTEND=
