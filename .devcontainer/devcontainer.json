@@ -27,7 +27,8 @@
 	// "postCreateCommand": "rustc --version"
 
 	"extensions": [
-	    "ms-python.python",
+	    "serial-monitor",
+        "ms-python.python",
     	"pymakr",
 		"micropy-cli",
 		"vadimcn.vscode-lldb"
