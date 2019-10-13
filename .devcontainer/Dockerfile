@@ -52,6 +52,7 @@ RUN conda update -n base -c defaults conda
 RUN conda create -n py3 python=3.7
 # RUN /bin/bash -c '. activate py3 && pip install esptool setuptools serial click cryptography future pyparsing==2.3.1 pyelftools'
 RUN /bin/bash -c '. activate py3 && pip install esptool setuptools pyserial click cryptography future pyparsing==2.3.1 pyelftools'
+#RUN /bin/bash -c '. activate py3 && pip install esptool micropy-cli setuptools pyserial click cryptography future pyparsing==2.3.1 pyelftools'
 
 #RUN /bin/bash -c '. activate py3 && pip install --upgrade pyparsing==2.3.1'
 

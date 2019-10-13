@@ -1,11 +1,11 @@
 {
-	"name": "Rust",
+	"name": "ESP32",
 	"dockerFile": "Dockerfile",
 
 	"runArgs": [
 		// Comment out the next line to run as root instead. Linux users, 
 		// update Dockerfile with your user's UID/GID if not 1000.
-		"-u", "vscode",
+		// "-u", "vscode",
 
 		"--privileged", "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"
 	],
@@ -27,10 +27,6 @@
 	// "postCreateCommand": "rustc --version"
 
 	"extensions": [
-	    "serial-monitor",
-        "ms-python.python",
-    	"pymakr",
-		"micropy-cli",
-		"vadimcn.vscode-lldb"
+        "ms-python.python"
 	]
 }

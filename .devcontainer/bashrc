@@ -17,4 +17,8 @@ echo "HOME=$HOME, USER=$USER, UID=$UID"
 echo "CONTAINER_START_PATH: $CONTAINER_START_PATH"
 cd "$CONTAINER_START_PATH"
 source $HOME/.bashrc
+
+# override user installed conda to use container
+# based conda
+export PATH=/opt/conda/bin:$PATH
 source activate py3
