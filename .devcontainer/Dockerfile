@@ -132,7 +132,7 @@ RUN cd /root/micropython/ports/esp32 && \
 #ADD install_node.sh /root/install_node.sh
 #RUN bash /root/install_node.sh --version $NODE_VERSION
 
-ADD checks.py.patch
+ADD checks.py.patch /checks.py.patch
 RUN patch -p0 < checks.py.patch
 
 ADD sudoers /etc/sudoers
