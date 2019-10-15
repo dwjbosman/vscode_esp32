@@ -1,0 +1,11 @@
+--- scripts/build/debug/300-gdb.sh	2019-10-11 23:13:50.000000000 +0200
++++ scripts/build/debug/300-gdb.sh	2019-10-15 13:22:28.726075869 +0200
+@@ -80,7 +80,7 @@
+             *)      cross_extra_config+=("--enable-threads");;
+         esac
+         if [ "${CT_GDB_CROSS_PYTHON}" = "y" ]; then
+-            cross_extra_config+=( "--with-python=yes" )
++            cross_extra_config+=( "--with-python=/usr/bin/python3" )
+         else
+             cross_extra_config+=( "--with-python=no" )
+         fi

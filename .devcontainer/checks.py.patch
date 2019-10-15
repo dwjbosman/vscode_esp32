@@ -1,0 +1,11 @@
+--- /usr/local/lib/python3.6/dist-packages/micropy/project/checks.py	2019-10-15 16:43:10.954375420 +0200
++++ /usr/local/lib/python3.6/dist-packages/micropy/project/checks.py	2019-10-15 16:42:44.438235850 +0200
+@@ -46,6 +46,8 @@
+     Returns:
+         bool: True if requirement is satisfied, False otherwise.
+     """
++    return True
++
+     name, vers = next(iter_vscode_ext(name=ext), (ext, '0.0.0'))
+     cur_vers = version.parse(vers)
+     min_vers = version.parse(min_version)

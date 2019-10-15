@@ -4,9 +4,25 @@
     2. make image
     3. wait :)
     4. After the image is built. Run ./ex_bash
+
+    6. Add the following to: ~/.config/Code/User/globalStorage/ms-vscode-remote.remote-containers/imageConfigs/vscode_esp32_image.json
+
+<pre>
+{
+    "extensions": [
+        "ms-python.python",
+        "pycom.pymakr"
+    ],
+    "workspaceFolder": "/root/.vscode-server"
+}
+</pre>
+
+
     5. start VSCode
     6. Attach to running container
-    7. Install extensions: serial_monitor, ms-python.python, pymakr, micropy-cli
+    7. Ctrl+Shit+P: Run the command "Python: Select interpreter"
+       1. Choose the Py3 Conda environment
+ 
 
 ## TODO
     Currently step 7 has to be done manually. Also ex_bash creates the correct user in the container and mounts the the home folder. An alias user called 'vscode'. By running commands as this user you ensure that the correct permissions are used. However I have not found a way yet to automatically run 'su' when attaching to the container. So in the VSCode terminal you still have to run "su vscode".

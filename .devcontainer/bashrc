@@ -20,5 +20,5 @@ source $HOME/.bashrc
 
 # override user installed conda to use container
 # based conda
-export PATH=/opt/conda/bin:$PATH
-source activate py3
+#export PATH=/opt/conda/bin:$PATH
+#source activate py3
