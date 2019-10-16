@@ -9,23 +9,28 @@
 
 <pre>
 {
+    "execArgs": [
+        "-u", "vscode"
+    ],
+
     "extensions": [
         "ms-python.python",
-        "pycom.pymakr"
+        "junhuanchen.mpfshell"
     ],
-    "workspaceFolder": "/root/.vscode-server"
+    "workspaceFolder": "/home//vscode/esp32/example_project"
 }
 </pre>
 
 
     5. start VSCode
     6. Attach to running container
-    7. Ctrl+Shit+P: Run the command "Python: Select interpreter"
-       1. Choose the Py3 Conda environment
- 
+    7. Ctrl+Shit+P: Run the command "Python: Select interpreter (python 3), select python Linter
+    8. Install plugins: python, mpfshell
+    9. Run in a VSCode terminal, micropy init (this installs the stubs)
+    10. To flash the micropython firmware: cd micropython && make deploy
+    11. via mpfshell you can put files, run commands etc., also check available commands via Ctrl+Shift+P
 
-## TODO
-    Currently step 7 has to be done manually. Also ex_bash creates the correct user in the container and mounts the the home folder. An alias user called 'vscode'. By running commands as this user you ensure that the correct permissions are used. However I have not found a way yet to automatically run 'su' when attaching to the container. So in the VSCode terminal you still have to run "su vscode".
+
 
 
 
