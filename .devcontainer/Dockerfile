@@ -134,6 +134,7 @@ RUN cd /root/micropython/ports/esp32 && \
 
 ADD checks.py.patch /checks.py.patch
 RUN patch -p0 < checks.py.patch
+RUN micropy stubs add esp32-micropython-1.11.0
 
 ADD sudoers /etc/sudoers
 
