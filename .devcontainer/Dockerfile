@@ -145,6 +145,21 @@ RUN chmod 755 /root \
     && chmod 755 /root/bashrc
 #WORKDIR $THEIA_RUST_APP_PATH
 ENV USER root
+
+#adduser --uid 999 --ingroup vscode --home /home/_vscode --shell /bin/sh --disabled-password --gecos "" vscode && \
+RUN addgroup --gid 999 vscode && \
+    adduser --uid 999 --ingroup vscode --no-create-home --disabled-password --gecos "" vscode && \
+    usermod -a -G sudo,plugdev vscode
+
+RUN USER=vscode && \
+    GROUP=vscode && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.4/fixuid-0.4-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $USER\ngroup: $GROUP\npaths: []" > /etc/fixuid/config.yml
+
+USER vscode:vscode
 # CMD [ "bash", "-rcfile", "/root/bashrc", "-i", "/root/run.sh" ]
 
 #RUN apt-get install git wget libncurses-dev flex bison gperf python python-pip python-setuptools python-serial python-click python-cryptography python-future python-pyparsing python-pyelftools cmake ninja-build ccache

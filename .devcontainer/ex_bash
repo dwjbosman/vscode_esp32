@@ -45,7 +45,7 @@ if [ -z $SOURCE_IMAGE ]; then
 fi
 
 if [ -z $CONTAINER_PREFIX ]; then
-    export CONTAINER_PREFIX="default"
+    export CONTAINER_PREFIX="default2"
 fi
 
 CURPATH=`pwd`
@@ -101,12 +101,14 @@ elif [ $SCRIPTNAME == "ex_bash" ]; then
     # executed in the container    
      
     if [ $# -eq 0 ] ; then
-        CMD_IN_CONTAINER=(sudo -i -u $USER bash --rcfile /root/bashrc)
+        CMD_IN_CONTAINER=(bash --rcfile /root/bashrc)
+        #CMD_IN_CONTAINER=(sudo -i -u $USER bash --rcfile /root/bashrc)
         echo "cmd_in_container(ex_bash0): ${CMD_IN_CONTAINER[@]}"
     else
         ARGS=${@:1}
         echo "arguments: $ARGS"
-        CMD="sudo -i -u $USER bash --rcfile /root/bashrc -ci"
+        CMD="bash --rcfile /root/bashrc -ci"
+        #CMD="sudo -i -u $USER bash --rcfile /root/bashrc -ci"
         CMD_IN_CONTAINER=($CMD "$ARGS")
         echo "cmd_in_container(ex_bash): ${CMD_IN_CONTAINER[@]}"
     fi
@@ -147,7 +149,7 @@ if [ ! "${CID}" ]; then
           -td \
           --security-opt seccomp=unconfined \
           --privileged \
-          -p 3000:3000 \
+          -p 3001:3001 \
           -v /home/$USER:/home/$USER \
           -v /dev/bus/usb:/dev/bus/usb \
           --name "${CONTAINER_NAME}" \
@@ -158,8 +160,11 @@ if [ ! "${CID}" ]; then
       docker exec \
           -ti \
           ${ENV_VARIABLES} \
+          -u $USER_UID:$USER_GID \
           ${CONTAINER_NAME} \
-          /bin/bash -c "addgroup --gid $USER_GID $USER >/dev/null 2>&1 && adduser --no-create-home --disabled-password --gecos \"\" --uid $USER_UID --gid $USER_GID $USER >/dev/null 2>&1 && usermod -a -G sudo $USER && usermod -aG plugdev $USER && useradd -o -N -u $USER_UID -g $USER_GID -G sudo,plugdev -s /bin/bash -m vscode"
+          fixuid 
+##          /usr/bin/sudo -- bash -c "addgroup --gid $USER_GID $USER >/dev/null 2>&1 && adduser --no-create-home --disabled-password --gecos \"\" --uid $USER_UID --gid $USER_GID $USER >/dev/null 2>&1 && usermod -a -G sudo $USER && usermod -aG plugdev $USER usermode -u $USER_UID vscode" ##useradd -o -N -u $USER_UID -g $USER_GID -G sudo,plugdev -s /bin/bash -m vscode"
+##          /bin/bash -c "addgroup --gid $USER_GID $USER >/dev/null 2>&1 && adduser --no-create-home --disabled-password --gecos \"\" --uid $USER_UID --gid $USER_GID $USER >/dev/null 2>&1 && usermod -a -G sudo $USER && usermod -aG plugdev $USER usermode -u $USER_UID vscode" ##useradd -o -N -u $USER_UID -g $USER_GID -G sudo,plugdev -s /bin/bash -m vscode"
       CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
 fi
 
