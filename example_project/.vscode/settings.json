@@ -20,5 +20,6 @@
         ".micropy/example_project"
     ],
     "python.linting.pylintEnabled": true,
-    "python.pythonPath": "/usr/bin/python"
+    "python.pythonPath": "/usr/bin/python",
+    "mpfshell.open": "ttyUSB0"
 }

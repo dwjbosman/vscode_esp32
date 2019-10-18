@@ -124,7 +124,7 @@ ENV USER root
 #adduser --uid 999 --ingroup vscode --home /home/_vscode --shell /bin/sh --disabled-password --gecos "" vscode && \
 RUN addgroup --gid 999 vscode && \
     adduser --uid 999 --ingroup vscode --home /home/_vscode --disabled-password --gecos "" vscode && \
-    usermod -a -G sudo,plugdev vscode
+    usermod -a -G sudo,plugdev,dialout,adm vscode
 
 RUN USER=vscode && \
     GROUP=vscode && \
@@ -135,6 +135,8 @@ RUN USER=vscode && \
     printf "user: $USER\ngroup: $GROUP\npaths:\n  - /home/_vscode\n  - /root/.vscode-server" > /etc/fixuid/config.yml
 
 RUN mkdir /root/.vscode-server && chown vscode:vscode /root/.vscode-server
+
+ENV ESPIDF /esp/esp-idf
 
 USER vscode:vscode
 

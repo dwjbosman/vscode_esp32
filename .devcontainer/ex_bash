@@ -152,6 +152,7 @@ if [ ! "${CID}" ]; then
           -p 3000:3000 \
           -v /home/$USER:/home/$USER \
           -v /dev/bus/usb:/dev/bus/usb \
+          --group-add=dialout --group-add=sudo \
           --name "${CONTAINER_NAME}" \
           ${ENV_VARIABLES} \
           "${SOURCE_IMAGE}" \

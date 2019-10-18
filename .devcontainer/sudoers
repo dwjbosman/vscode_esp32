@@ -8,11 +8,10 @@
 #
 Defaults	env_reset
 Defaults	mail_badpass
-Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+Defaults	secure_path="/esp/crosstool-NG/builds/xtensa-esp32-elf/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
 Defaults    env_keep += "CONTAINER_START_PATH"
-Defaults    env_keep += "THEIA_RUST_APP_PATH"
-Defaults    env_keep += "RUSTUP_HOME"
-Defaults    env_keep += "CARGO_HOME"
+Defaults    env_keep += "IDF_PATH"
+Defaults    env_keep += "ESPIDF"
 
 # Host alias specification
 
