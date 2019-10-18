@@ -4,7 +4,7 @@ HOST_NAME=$(shell hostname)
 
 REGISTRY=$(HOST_NAME):5000
 REGISTRY_REMOTE=localhost:5001
-DOCKER_IMAGE = vscode_esp32_image:latest
+DOCKER_IMAGE = planetbosman/esp32_vscode:latest
 DOCKER_CONTAINER = vscode_esp32_container
 BUILD_DIR = build-env
 
@@ -38,6 +38,9 @@ push:
 pull:
 	docker pull ${REGISTRY}/${DOCKER_IMAGE}
 	docker tag ${REGISTRY}/${DOCKER_IMAGE} ${DOCKER_IMAGE}
+
+pull_hub:
+	docker pull ${DOCKER_IMAGE}
 
 # transfer from remote registry into local registry
 transfer_remote:

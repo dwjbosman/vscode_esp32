@@ -41,11 +41,11 @@ set -e
 set -x
 # Check if any parameters were given
 if [ -z $SOURCE_IMAGE ]; then
-    export SOURCE_IMAGE="vscode_esp32_image"
+    export SOURCE_IMAGE="planetbosman/esp32_vscode"
 fi
 
-if [ -z $CONTAINER_PREFIX ]; then
-    export CONTAINER_PREFIX="default"
+if [ -z $CONTAINER_NAME ]; then
+    export CONTAINER_NAME="default_esp32_vscode"
 fi
 
 CURPATH=`pwd`
@@ -115,7 +115,7 @@ elif [ $SCRIPTNAME == "ex_bash" ]; then
 fi
 
 # Set up the container name
-CONTAINER_NAME="${CONTAINER_PREFIX}-${SOURCE_IMAGE}-${USER}"
+CONTAINER_NAME="${CONTAINER_NAME}-${USER}"
 echo "Searching for Docker container: ${CONTAINER_NAME}"
 
 CID=$(docker ps -q -f status=exited -f name=^/${CONTAINER_NAME}$)
