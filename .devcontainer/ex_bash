@@ -149,7 +149,7 @@ if [ ! "${CID}" ]; then
           -td \
           --security-opt seccomp=unconfined \
           --privileged \
-          -p 3001:3001 \
+          -p 3000:3000 \
           -v /home/$USER:/home/$USER \
           -v /dev/bus/usb:/dev/bus/usb \
           --name "${CONTAINER_NAME}" \
