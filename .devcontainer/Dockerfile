@@ -36,34 +36,12 @@ RUN apt-get update --fix-missing && \
 RUN  rm /usr/bin/python && \
     ln -s /usr/bin/python3.6 /usr/bin/python 
 
-
-#RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.7.10-Linux-x86_64.sh -O ~/miniconda.sh && \
-#    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
-#    rm ~/miniconda.sh && \
-#    /opt/conda/bin/conda clean -tipsy && \
-#    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
-#    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
-#    echo "conda activate base" >> ~/.bashrc && \
-#    find /opt/conda/ -follow -type f -name '*.a' -delete && \
-#    find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
-#    /opt/conda/bin/conda clean -afy
-
-#RUN conda update -n base -c defaults conda
-#RUN conda create -n py3 python=3.7
-# RUN /bin/bash -c '. activate py3 && pip install esptool setuptools serial click cryptography future pyparsing==2.3.1 pyelftools'
-#RUN /bin/bash -c '. activate py3 && pip install esptool setuptools pyserial click cryptography future pyparsing==2.3.1 pyelftools'
 RUN pip3 install esptool pylint micropy-cli setuptools pyserial click cryptography future pyparsing==2.3.1 pyelftools mpfshell-lite
 
-#RUN /bin/bash -c '. activate py3 && pip install --upgrade pyparsing==2.3.1'
-
 # otherwise configure gdb will crash
-# RUN mv /opt/conda/envs/py3/lib/python3.7/config-3.7m-x86_64-linux-gnu/libpython3.7m.a /opt/conda/envs/py3/lib/python3.7/config-3.7m-x86_64-linux-gnu/libpython3.7m.a.bak
 RUN mv /usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6m.a /usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6m.a.bak
 
 RUN mkdir -p /esp 
-
-# https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
-#git checkout esp32-2019r1 && \
 
 RUN cd /esp && \
     git clone https://github.com/espressif/crosstool-NG.git && \
@@ -78,10 +56,7 @@ RUN cd /esp && \
     make install 
 
 #patch gdb - python3
-# ADD crosstool.config /esp/crosstool-NG/samples/xtensa-esp32-elf/crosstool.config
 ADD crosstool_old.config /esp/crosstool-NG/samples/xtensa-esp32-elf/crosstool.config
-
-# RUN printf "\nCT_ALLOW_BUILD_AS_ROOT=y\nCT_ALLOW_BUILD_AS_ROOT_SURE=y\nCT_GDB_CROSS_PYTHON=y\nCT_GDB_CROSS_PYTHON_BINARY=\"/opt/conda/envs/py3/bin/python\"\n" >> /esp/crosstool-NG/samples/xtensa-esp32-elf/crosstool.config
 
 RUN cd /esp && \
     cd crosstool-NG && \
@@ -148,7 +123,7 @@ ENV USER root
 
 #adduser --uid 999 --ingroup vscode --home /home/_vscode --shell /bin/sh --disabled-password --gecos "" vscode && \
 RUN addgroup --gid 999 vscode && \
-    adduser --uid 999 --ingroup vscode --no-create-home --disabled-password --gecos "" vscode && \
+    adduser --uid 999 --ingroup vscode --home /home/_vscode --disabled-password --gecos "" vscode && \
     usermod -a -G sudo,plugdev vscode
 
 RUN USER=vscode && \
@@ -157,9 +132,12 @@ RUN USER=vscode && \
     chown root:root /usr/local/bin/fixuid && \
     chmod 4755 /usr/local/bin/fixuid && \
     mkdir -p /etc/fixuid && \
-    printf "user: $USER\ngroup: $GROUP\npaths: []" > /etc/fixuid/config.yml
+    printf "user: $USER\ngroup: $GROUP\npaths:\n  - /home/_vscode\n  - /root/.vscode-server" > /etc/fixuid/config.yml
+
+RUN mkdir /root/.vscode-server && chown vscode:vscode /root/.vscode-server
 
 USER vscode:vscode
+
 # CMD [ "bash", "-rcfile", "/root/bashrc", "-i", "/root/run.sh" ]
 
 #RUN apt-get install git wget libncurses-dev flex bison gperf python python-pip python-setuptools python-serial python-click python-cryptography python-future python-pyparsing python-pyelftools cmake ninja-build ccache

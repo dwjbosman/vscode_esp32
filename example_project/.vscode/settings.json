@@ -4,17 +4,20 @@
     "python.autoComplete.extraPaths": [
         ".micropy/BradenM-micropy-stubs-4cd2f1a/frozen",
         ".micropy/BradenM-micropy-stubs-3405668/frozen",
-        ".micropy/BradenM-micropy-stubs-3405668/stubs"
+        ".micropy/BradenM-micropy-stubs-3405668/stubs",
+        ".micropy/example_project"
     ],
     "python.autoComplete.typeshedPaths": [
         ".micropy/BradenM-micropy-stubs-4cd2f1a/frozen",
         ".micropy/BradenM-micropy-stubs-3405668/frozen",
-        ".micropy/BradenM-micropy-stubs-3405668/stubs"
+        ".micropy/BradenM-micropy-stubs-3405668/stubs",
+        ".micropy/example_project"
     ],
     "python.analysis.typeshedPaths": [
         ".micropy/BradenM-micropy-stubs-4cd2f1a/frozen",
         ".micropy/BradenM-micropy-stubs-3405668/frozen",
-        ".micropy/BradenM-micropy-stubs-3405668/stubs"
+        ".micropy/BradenM-micropy-stubs-3405668/stubs",
+        ".micropy/example_project"
     ],
     "python.linting.pylintEnabled": true,
     "python.pythonPath": "/usr/bin/python"
