@@ -45,7 +45,7 @@ if [ -z $SOURCE_IMAGE ]; then
 fi
 
 if [ -z $CONTAINER_PREFIX ]; then
-    export CONTAINER_PREFIX="default2"
+    export CONTAINER_PREFIX="default"
 fi
 
 CURPATH=`pwd`
