@@ -1,8 +1,10 @@
 # Introduction
 
-This repo shows how to work with Micropython on an ESP32 device, while using Microsoft VSCode. It makes use of the VSCode remote container extension. The extension connects to a Docker container in which all the ESP32 tooling has been installed. The tooling has been compiled from source.
-
-
+This repo shows how to work with Micropython on an ESP32 device. Features:
+    * it uses Microsoft VSCode. It makes use of the VSCode remote container extension. 
+    * The extension connects to a Docker container in which all the ESP32 tooling has been installed. The tooling has been compiled from source.
+    * Various utilities have been installed (mpfshell, micropython-cli, esptool)
+    * An example of a custom C++ module is added to Micropython.
 
 # Tooling
 
@@ -11,11 +13,16 @@ In the Docker image the following tools have been installed:
     1. xtensa-esp32 toolchain (compiled from source!) in /esp/crosstool-NG
     2. esp-idf (freetos ESP32 library) in /esp/esp-idf   
     3. micropython in /root/micropython
+       1. Micropython-wrap in /root/micropython/extmode/micropython-wrap
     4. esptool (allows to erase flash)
     5. mpfshell (allows to put files on the ESP32 flash, start the REPL)
     6. micropy-cli (allows the setup micropython projects including intellisense and pylinting)
 
 The ex_bash script in the .devcontainer folder can be used to start the container. The ex_bash script starts the container with 'privileged' permissions in order to have access the USB port. Furthermore it mounts the users home dir in the container, so you will have access to you files. Lastly it will correct the Docker user permissions which will ensure that file permissions are handled correctly.
+
+## Custom C++ <-> Micropython interface
+
+An example custom c++ module is setup in /root/micropython/extmod/custommodule. The C++ code uses the micropython-wrap library to reduce the amount of boilerplate code. The custommodule is registered in the micropython main code (see micropython/ports/esp32/main.c)
 
 # Tutorial
 
@@ -76,9 +83,6 @@ esptool.py --chip esp32 --port /dev/ttyUSB0 --after hard_reset chip_id
 mpfs -n --nohelp -c "open ttyUSB0; r;"
 </pre>
 
-# TODO
-    
-    Will be adding instructions to add custom C libaries 
 
 
 
