@@ -24,6 +24,11 @@ The ex_bash script in the .devcontainer folder can be used to start the containe
 
 An example custom c++ module is setup in /root/micropython/extmod/custommodule. The C++ code uses the micropython-wrap library to reduce the amount of boilerplate code. The custommodule is registered in the micropython main code (see micropython/ports/esp32/main.c)
 
+When modifying the code in custommodule.cpp you can run the following to recompile the Micropython firmware:
+<pre>
+    cd /root/micropython/ports/esp32 && ESPIDF=$IDF_PATH make -j4 -f lolin32_makefile
+</pre>
+
 # Tutorial
 
     1. Install VSCode and Docker

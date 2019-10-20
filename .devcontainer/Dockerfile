@@ -89,7 +89,10 @@ RUN cd /esp && \
 ENV IDF_PATH /esp/esp-idf
 
 # original: https://github.com/micropython/micropython.git 
-RUN git clone --recurse-submodules https://github.com/dwjbosman/micropython.git /root/micropython
+RUN git clone --recurse-submodules https://github.com/dwjbosman/micropython.git /root/micropython && \
+    cd /root/micropython && \
+    git checkout 8790145857805041128dc2cc83a8b2fe1169039e && \
+    git submodule update
 
 RUN cd /root/micropython && \
     make -C mpy-cross
