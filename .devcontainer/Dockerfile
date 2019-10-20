@@ -79,14 +79,17 @@ ENV PATH "/esp/crosstool-NG/builds/xtensa-esp32-elf/bin:$PATH"
 #Supported git hash (v3.3): 6ccb4cf5b7d1fdddb8c2492f9cbc926abaf230df
 #Supported git hash (v4.0-beta1) (experimental): 310beae373446ceb9a4ad9b36b5428d7fdf2705f
 
+ARG ESP_IDF_VERSION=v3.3
+
 RUN cd /esp && \
-    git clone -b v3.3 --recursive https://github.com/espressif/esp-idf.git && \
+    git clone -b ${ESP_IDF_VERSION} --recursive https://github.com/espressif/esp-idf.git && \
     cd /esp/esp-idf && \
     git submodule update --init --recursive
 
 ENV IDF_PATH /esp/esp-idf
 
-RUN git clone --recurse-submodules https://github.com/micropython/micropython.git /root/micropython
+# original: https://github.com/micropython/micropython.git 
+RUN git clone --recurse-submodules https://github.com/dwjbosman/micropython.git /root/micropython
 
 RUN cd /root/micropython && \
     make -C mpy-cross
