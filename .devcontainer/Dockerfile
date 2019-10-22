@@ -103,7 +103,7 @@ RUN cd /root/micropython && \
 ADD lolin32_makefile /root/micropython/ports/esp32/lolin32_makefile
 
 RUN cd /root/micropython/ports/esp32 && \
-    ESPIDF=$IDF_PATH make -j4 -f lolin32_makefile
+    ESPIDF=$IDF_PATH make -j1 -f lolin32_makefile
 
 
 #RUN apt-get update && \
