@@ -10,7 +10,11 @@ BUILD_DIR = build-env
 
 # build the image using the cache
 image: 
-	docker build -t $(DOCKER_IMAGE) .
+	docker build --build-arg ESP_IDF_VERSION=v3.3 -t $(DOCKER_IMAGE) .
+
+image_v4: 
+	docker build --build-arg ESP_IDF_VERSION=v4.0-beta1 -t $(DOCKER_IMAGE) .
+
 
 # This empty directory '$(BUILD_DIR)' exists in git, with only an .gitignore file, set to ignore the entire contents of the dir.
 # This helps to avoid committing files in that dir to git.
