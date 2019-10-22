@@ -18,20 +18,22 @@ RUN apt-get update \
     # Install C++ tools
     && apt-get -y install build-essential cmake cppcheck valgrind \
     #
-    && apt-get install -y sudo
+    && apt-get install -y sudo \
+    &&
+    apt-get install -y curl python3.6 python3.6-dev python3-pip wget bzip2 ca-certificates libglib2.0-0 libxext6 libsm6 libxrender1 git mercurial subversion iproute2 git libncurses-dev flex bison gperf cmake ninja-build ccache gawk grep gettext automake bison flex texinfo help2man libtool libtool-bin make unzip \
     #
     # Clean up
-    # && apt-get autoremove -y \
-    # && apt-get clean -y \
-    # && rm -rf /var/lib/apt/lists/*
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
     
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 #ENV PATH /opt/conda/bin:$PATH
 
 
-RUN apt-get update --fix-missing && \
-    apt-get install -y curl python3.6 python3.6-dev python3-pip wget bzip2 ca-certificates libglib2.0-0 libxext6 libsm6 libxrender1 git mercurial subversion iproute2 git libncurses-dev flex bison gperf cmake ninja-build ccache gawk grep gettext automake bison flex texinfo help2man libtool libtool-bin make unzip && \
-    apt-get clean
+#RUN apt-get update --fix-missing && \
+#    apt-get install -y curl python3.6 python3.6-dev python3-pip wget bzip2 ca-certificates libglib2.0-0 libxext6 libsm6 libxrender1 git mercurial subversion iproute2 git libncurses-dev flex bison gperf cmake ninja-build ccache gawk grep gettext automake bison flex texinfo help2man libtool libtool-bin make unzip && \
+#    apt-get clean
 
 RUN  rm /usr/bin/python && \
     ln -s /usr/bin/python3.6 /usr/bin/python 
