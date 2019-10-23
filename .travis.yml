@@ -1,18 +1,18 @@
 language: python
 services:
-  - docker
+- docker
 before_install:
-  script:
-    - cd $TRAVIS_BUILD_DIR/.devcontainer
-    - ls
-    - make image
+  - ls
+  - cd $TRAVIS_BUILD_DIR/.devcontainer
+  - ls
+  - make image
 
 deploy:
   provider: script
   script: 
-    - cd $TRAVIS_BUILD_DIR/.devcontainer
-    - make docker_login
-    - make push_hub
+  - cd $TRAVIS_BUILD_DIR/.devcontainer
+  - make docker_login
+  - make push_hub
   on:
     branch: master
 
