@@ -1,0 +1,21 @@
+language: python
+services:
+- docker
+before_install:
+    script:
+    - cd .devcontainer
+    - make image
+
+deploy:
+    provider: script
+    script: 
+    - cd .devcontainer
+    - make docker_login
+    - make push_hub
+  on:
+    branch: master
+
+env:
+  global:
+  - secure: iRkwp81FoYoacqBu6YrJfE4mkhUUjT3yikk/Wb3wjBUVgqhfFXDpyiiaeRGD2J3DwizXtniNK6cWRWV17TIPOT00aWCuUxpxWHZKd6CLNoOReRcmVCe/CwCgAXu0sGf25HqF0ZAHFTZPjGURAYbAmfDYBOl13IDsXVhlRk/VzsV+0IBk/QNznDkt+l+De6wMNKF8yJpNPO8Eav+KQo2/+FVLw3jUFhKWrEVQXUrdLKCrIE7rLtkXMwo/zYnFgY2eGnEkzEZjdqYDL1hPlwGxTTch8kOEU/pyte8+mAOEcDHs+Js7ePy/uwoW1JzyIWUB9N9S3/W6BVlzj3/P4Pi/a2QxESxtvH+pzPnFQwUhxFm8xveTLlOk7rcxZORihiglXv9ccEpX4rkvNVNL/v3LH/JJaGH98AtPhNrhGNmoogNxVG8b0vROjKdDDzOuJaiyHyAcHXGkaVdT3eAUJLe/pFrBxKvXavWkp5x7m8LO6uweflukXn2qKcHuUq2b1cCUujZ4yacmeyQPlBj4b28V8KYEn3ZWclgt3P9qmDASNmtUmp5Uit3IkguJlJZWY3XeXOsL+Ch/+wkjV5UeARpqovwsOWFiMPRNh4zsyK8bsMhBAgN0fUh8cRqT41u9M21MzFkB9SLYr/0JE9NqRlrGIvEOZAyEIbOeVT9wEHFkkts=
+  - secure: ZZEmpQfbMpiJkD0gmT1WF7caEJe6pjuuh2B9XHna7eiE7NVtRv4UtOMnWOPhs8QGhcl8hhyyJy/gdzwgwBk6nydSjarvPZjBOwvV+PsYUewsdnDyCpipPzPawBwMKfd0LcQ1zBpW70SZBlmXWDrDSkcVTua6KduXndYtA/0e3cnYNeIUgyh1tVyTEmrgy6kC+zuQ5u+aSG0Be/1BBdTSSEwYi8Pb4l0K2/KX1FfMOD6i6ps2afasC+XXENoY5xYCYpoiNWbG01U/1Hd3EENMSXvnkz0Dukkw5HYrCZDb/l+A8O6N1oAjc95L15lPO2mppNj24AIu56ppzy7Cdo4KIjBlgIwZ6JrJjWvFftbhzuilhXj6bXv7LLWLeMhYM0MclzFbt4OACpDGu+h1o4aMXD2PnQaxja95H6Tgedk9VhBgDSDc0B6KfBiuiHSAHwZRDCAEPo8vRm8PsCj+9wiUb0RVHfFCbpP/SnqK3KuMWxTS/NhFhaqAABf3LKahPLdKAGpCA5TlE5mkn1qNpTTwiZUAOoCUAI5wDmNkVv+qGQRvFo/XcvaQOym1k5sGmqvwbQN55OrCKeXEXIiy7uAwsviQZuw/FDjVgOqF1HPPEPIMOJi8UB8Jodl7/IIq1liDQuTGHc9797iPqsPNl9HIUo2zxoufowzWDVKSZ9Ky7KA=

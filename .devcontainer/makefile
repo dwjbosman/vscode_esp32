@@ -52,3 +52,10 @@ transfer_remote:
 	docker tag ${REGISTRY_REMOTE}/${DOCKER_IMAGE} ${DOCKER_IMAGE}
 
 
+docker_login:
+	echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+
+push_hub:
+	docker push ${DOCKER_USERNAME}/esp32_vscode:latest
+
+
