@@ -1,14 +1,14 @@
 language: python
 services:
-- docker
+  - docker
 before_install:
-    script:
+  script:
     - cd .devcontainer
     - make image
 
 deploy:
-    provider: script
-    script: 
+  provider: script
+  script: 
     - cd .devcontainer
     - make docker_login
     - make push_hub
