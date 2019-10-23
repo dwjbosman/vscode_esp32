@@ -3,13 +3,14 @@ services:
   - docker
 before_install:
   script:
-    - cd .devcontainer
+    - cd $TRAVIS_BUILD_DIR/.devcontainer
+    - ls
     - make image
 
 deploy:
   provider: script
   script: 
-    - cd .devcontainer
+    - cd $TRAVIS_BUILD_DIR/.devcontainer
     - make docker_login
     - make push_hub
   on:
