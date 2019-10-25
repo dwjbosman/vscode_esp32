@@ -1,0 +1,17 @@
+docker-build-master:
+  # Official docker image.
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - apk add make
+    - cd .devcontainer
+    - make docker_login
+    - make pull_hub
+    - make image
+    - make push_hub
+    - make image_v4
+    - make push_hub_v4
+  only:
+    - master
