@@ -5,6 +5,7 @@ docker-build-master:
   services:
     - docker:dind
   script:
+    - env
     - apk add make
     - cd .devcontainer
     - make docker_login
