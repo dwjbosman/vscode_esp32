@@ -90,5 +90,7 @@ mpfs -n --nohelp -c "open ttyUSB0; r;"
 
 
 
+# TODO
 
+Get ESP-IDF v4.0beta working
 
