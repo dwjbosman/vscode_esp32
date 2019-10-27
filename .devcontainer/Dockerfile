@@ -90,7 +90,7 @@ RUN cd /esp && \
 ENV IDF_PATH /esp/esp-idf
 
 #invalidate cache if micropython is updated
-ADD https://api.github.com/repos/dwjbosman/micropython/git/refs/heads/master /root/micropython/version.json
+ADD https://api.github.com/repos/dwjbosman/micropython/git/refs/heads/master /root/micropython_version.json
 
 # original: https://github.com/micropython/micropython.git 
 RUN git clone --recurse-submodules https://github.com/dwjbosman/micropython.git /root/micropython && \
