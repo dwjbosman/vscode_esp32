@@ -10,6 +10,7 @@ docker-build-master:
     - cd .devcontainer
     - make docker_login
     - make pull_hub
+    - make pull_hub_v4
     - make image
     - make push_hub
     - make image_v4
