@@ -31,13 +31,34 @@ When modifying the code in custommodule.cpp you can run the following to recompi
 
 # Tutorial
 
+
+## Initial steps
+
     1. Install VSCode and Docker
     2. Install the remote docker extension in VSCode
     3. Go into the .devcontainer folder of this repo
+
+There are two version available. One based on ESP IDF v3.3 and one based on ESP IDF v4.0beta1.
+
+## ESP IDF v3.3
+
     3. Run "make pull_hub" to get the EPS32 tooling image from Docker hub, or run "make image" to locally build the docker image containing the tooling (this will take quite a long time!)
     4. First plug in the ESP32 device (otherwise /dev/ttyUSB won't be available in the container).
     5. Go into the .devcontainer folder of this repo and run ./ex_bash (this creates the container and mounts your home dir inside the container)
+       
+## ESP IDV v4.0 beta1
+
+    3. Run "make pull_hub_v4" to get the EPS32 tooling image from Docker hub, or run "make image_v4" to locally build the docker image containing the tooling (this will take quite a long time!)
+    4. First plug in the ESP32 device (otherwise /dev/ttyUSB won't be available in the container).
+    5. Go into the .devcontainer folder of this repo and run 
+       <pre>SOURCE_IMAGE="planetbosman/esp32_vscode_v4" ./ex_bash</pre>
+    
+       This creates the container and mounts your home dir inside the container.
+
+## Final steps
+
     6. Add the following to: ~/.config/Code/User/globalStorage/ms-vscode-remote.remote-containers/imageConfigs/planetbosman%2fesp32_vscode.json <BR>
+
 <BR>
     Note replace workspacefolder path to the path of the example project in this repo.
 <BR>
@@ -56,41 +77,36 @@ When modifying the code in custommodule.cpp you can run the following to recompi
 </pre>
 
 
-    8. In vscode choode ctrl-shift+P: Attach to running container
-    9. Ctrl+Shit+P: Run the command "Python: Select interpreter (python 3), select python Linter
-    10. Use esptool to erase flash
+    7. In vscode choode ctrl-shift+P: Attach to running container
+    8. Ctrl+Shit+P: Run the command "Python: Select interpreter (python 3), select python Linter
+    9. Use esptool to erase flash
 
 <pre>
 esptool.py --chip esp32 --port /dev/ttyUSB0 erase_flash
 </pre>
 
-    11. To flash the micropython firmware open a VScode terminal and: i
+    10. To flash the micropython firmware open a VScode terminal and: i
 
 <pre>
 cd /root/micropython/ports/esp32 && sudo make deploy
 </pre>
 
-    12. open folder "example_project". Open a terminal and upload various files
+    11. open folder "example_project". Open a terminal and upload various files
 
 <pre>
 mpfs -n --nohelp -c "open ttyUSB0; put ssd1306.py; put main.py;"
 </pre>
 
-    13. Reset the device
+    12. Reset the device
 
 <pre>
 esptool.py --chip esp32 --port /dev/ttyUSB0 --after hard_reset chip_id
 </pre>
 
-    14. Start a REPL (the REPL can be quit with CTRL+]) 
+    13. Start a REPL (the REPL can be quit with CTRL+]) 
 
 <pre>
 mpfs -n --nohelp -c "open ttyUSB0; r;"
 </pre>
 
-
-
-# TODO
-
-Get ESP-IDF v4.0beta working
 
