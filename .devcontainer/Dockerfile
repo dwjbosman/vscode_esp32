@@ -126,7 +126,9 @@ ENV SHELL /bin/bash
 # script to set environment
 ADD bashrc /root/bashrc
 RUN chmod 755 /root \
-    && chmod 755 /root/bashrc
+    && chmod 755 /root/bashrc \
+    && chmod 755 /etc/sudoers
+
 #WORKDIR $THEIA_RUST_APP_PATH
 ENV USER root
 
