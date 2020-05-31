@@ -13,8 +13,12 @@ BUILD_DIR = build-env
 image: 
 	docker build --cache-from $(DOCKER_IMAGE_V3) --build-arg ESP_IDF_VERSION=v3.3 -t $(DOCKER_IMAGE_V3) .
 
+image_local_cache: 
+	docker build --build-arg ESP_IDF_VERSION=v3.3 -t $(DOCKER_IMAGE_V3) .
+
+
 image_v4: 
-	docker build --cache-from $(DOCKER_IMAGE_V3) --cache-from $(DOCKER_IMAGE_V4) --build-arg ESP_IDF_VERSION=v4.0-beta1 -t $(DOCKER_IMAGE_V4) .
+	docker build --cache-from $(DOCKER_IMAGE_V3) --cache-from $(DOCKER_IMAGE_V4) --build-arg ESP_IDF_VERSION=v4.0.1 -t $(DOCKER_IMAGE_V4) .
 
 
 # This empty directory '$(BUILD_DIR)' exists in git, with only an .gitignore file, set to ignore the entire contents of the dir.

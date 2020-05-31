@@ -19,7 +19,7 @@ RUN apt-get update \
     && apt-get -y install build-essential cmake cppcheck valgrind \
     #
     && apt-get install -y sudo \
-    && apt-get install -y curl python3.6 python3.6-dev python3-pip wget bzip2 ca-certificates libglib2.0-0 libxext6 libsm6 libxrender1 git mercurial subversion iproute2 git libncurses-dev flex bison gperf cmake ninja-build ccache gawk grep gettext automake bison flex texinfo help2man libtool libtool-bin make unzip \
+    && apt-get install -y curl python3 python3-dev python3-pip wget bzip2 ca-certificates libglib2.0-0 libxext6 libsm6 libxrender1 git mercurial subversion iproute2 git libncurses-dev flex bison gperf cmake ninja-build ccache gawk grep gettext automake bison flex texinfo help2man libtool libtool-bin make unzip \
     #
     # Clean up
     && apt-get autoremove -y \
@@ -35,9 +35,10 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 #    apt-get clean
 
 RUN  rm /usr/bin/python && \
-    ln -s /usr/bin/python3.6 /usr/bin/python 
+    ln -s /usr/bin/python3 /usr/bin/python 
 
-RUN pip3 install esptool pylint micropy-cli setuptools pyserial click cryptography future pyparsing==2.3.1 pyelftools mpfshell-lite
+
+RUN python -m pip install esptool pylint micropy-cli setuptools pyserial click cryptography future pyparsing==2.3.1 pyelftools mpfshell-lite
 
 # otherwise configure gdb will crash
 RUN mv /usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6m.a /usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6m.a.bak
@@ -57,6 +58,7 @@ RUN cd /esp && \
     make install 
 
 #patch gdb - python3
+RUN mv /esp/crosstool-NG/samples/xtensa-esp32-elf/crosstool.config /esp/crosstool-NG/samples/xtensa-esp32-elf/crosstool.config.bak
 ADD crosstool_old.config /esp/crosstool-NG/samples/xtensa-esp32-elf/crosstool.config
 
 RUN cd /esp && \
@@ -89,18 +91,19 @@ RUN cd /esp && \
 
 ENV IDF_PATH /esp/esp-idf
 
+ARG MICROPYTHON_VERSION=v1.12d
 #invalidate cache if micropython is updated
-ADD https://api.github.com/repos/dwjbosman/micropython/git/refs/heads/master /root/micropython_version.json
+ADD https://api.github.com/repos/dwjbosman/micropython/git/refs/tags/${MICROPYTHON_VERSION} /root/micropython_version.json
 
 # original: https://github.com/micropython/micropython.git 
-RUN git clone --recurse-submodules https://github.com/dwjbosman/micropython.git /root/micropython && \
+RUN git clone --recurse-submodules --branch ${MICROPYTHON_VERSION} https://github.com/dwjbosman/micropython.git /root/micropython && \
     cd /root/micropython && \
     git submodule update
 
 RUN cd /root/micropython && \
     make -C mpy-cross
 
-# RUN /bin/bash -c '. activate py3 && pip uninstall -y serial && rm -rf /opt/conda/envs/py3/lib/python3.7/site-packages/serial && pip install pyserial'
+# RUN /bin/bash -c '. activate py3 && pip uninstall -y serial && rm -rf /opt/conda/envs/py3/lib/python3.6/site-packages/serial && pip install pyserial'
 # RUN /bin/bash -c '. activate py3 && pip install --upgrade --force-reinstal pyserial'
 ADD lolin32_makefile /root/micropython/ports/esp32/lolin32_makefile
 
@@ -116,9 +119,10 @@ RUN cd /root/micropython/ports/esp32 && \
 #ADD install_node.sh /root/install_node.sh
 #RUN bash /root/install_node.sh --version $NODE_VERSION
 
-ADD checks.py.patch /checks.py.patch
-RUN patch -p0 < checks.py.patch
-RUN micropy stubs add esp32-micropython-1.11.0
+#ADD checks.py.patch /checks.py.patch
+# RUN patch -p0 < checks.py.patch
+# TODO USE MICROPYTHON_VERSION 
+RUN micropy stubs add esp32-micropython-1.12.0 
 
 ADD sudoers /etc/sudoers
 
@@ -143,9 +147,11 @@ RUN USER=vscode && \
     chown root:root /usr/local/bin/fixuid && \
     chmod 4755 /usr/local/bin/fixuid && \
     mkdir -p /etc/fixuid && \
-    printf "user: $USER\ngroup: $GROUP\npaths:\n  - /home/_vscode\n  - /root/.vscode-server" > /etc/fixuid/config.yml
+    printf "user: $USER\ngroup: $GROUP\npaths:\n  - /home/_vscode\n " > /etc/fixuid/config.yml
 
-RUN mkdir /root/.vscode-server && chown vscode:vscode /root/.vscode-server
+RUN mkdir /root/.vscode-server && chown vscode:vscode /root/.vscode-server 
+RUN mkdir /root/.vscode-server-insiders && chown vscode:vscode /root/.vscode-server-insiders
+# RUN chown -R vscode:vscode /root
 
 ENV ESPIDF /esp/esp-idf
 

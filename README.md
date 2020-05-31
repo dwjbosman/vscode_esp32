@@ -63,23 +63,21 @@ There are two version available. One based on ESP IDF v3.3 and one based on ESP 
     Note replace workspacefolder path to the path of the example project in this repo.
 <BR>
 <pre>
-{
-    "execArgs": [
-        "-u", "vscode"
-    ],
-
+{ 
+    "remoteUser": "vscode",
     "extensions": [
         "ms-python.python",
         "junhuanchen.mpfshell"
     ],
-    "workspaceFolder": "/home/dinne/vscode/esp32/example_project"
+    "workspaceFolder": "/home/dinne/vscode_esp32/example_project"
 }
 </pre>
 
 
-    7. In vscode choode ctrl-shift+P: Attach to running container
+    7. In vscode choose ctrl-shift+P: Attach to running container
     8. Ctrl+Shit+P: Run the command "Python: Select interpreter (python 3), select python Linter
-    9. Use esptool to erase flash
+    9. open a terminal. Run micropython (this generates the import stubs) 
+   10. Use esptool to erase flash
 
 <pre>
 esptool.py --chip esp32 --port /dev/ttyUSB0 erase_flash

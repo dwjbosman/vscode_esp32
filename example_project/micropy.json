@@ -1,7 +1,7 @@
 {
     "name": "example_project",
     "stubs": {
-        "esp32-micropython-1.11.0": "1.2.0"
+        "esp32-micropython-1.12.0": "1.2.0"
     },
     "config": {
         "vscode": true,
